@@ -1,3 +1,10 @@
-let arreglo:number [][] = [[1,2,3],[2,3,4]]
+import {MapGame} from 'Map/MapGame'
 
-console.log(arreglo)
+
+
+let Entrymap:number [][] = [[2,3,4],[3, 5,4]]
+
+let gamemap: MapGame = new MapGame(Entrymap)
+
+    
+console.log(gamemap.getmap())
