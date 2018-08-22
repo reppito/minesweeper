@@ -1,15 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const rl = require("readline-sync");
-function initgame() {
-    let flag = true;
-    do {
-        //initial params
-        let input = rl.question('please introduce initial params width height width and number of bombs. Ej: 40 30 7  ');
-        let params = input.split(' ');
-        console.clear();
-    } while (flag);
+const Game_1 = require("./Game/Game");
+//creating game
+let game = new Game_1.Game();
+//loop for game
+while (true) {
+    game.initGame();
+    console.log('im here');
 }
-console.clear();
-initgame();
 //# sourceMappingURL=index.js.map
