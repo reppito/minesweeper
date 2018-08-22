@@ -1,0 +1,23 @@
+{
+  "name": "minesweeperts",
+  "version": "1.0.0",
+  "description": "minesweeper console created with typescript",
+  "main": "index.js",
+  "scripts": {
+    "test": "nodemon index"
+  },
+  "repository": {
+    "type": "git",
+    "url": "none"
+  },
+  "keywords": [
+    "minesweeper",
+    "typescript",
+    "nodejs"
+  ],
+  "author": "raul cordoba",
+  "license": "ISC",
+  "dependencies": {
+    "eslint": "^5.4.0"
+  }
+}
