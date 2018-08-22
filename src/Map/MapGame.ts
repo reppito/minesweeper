@@ -2,7 +2,7 @@ export class MapGame{
 
     map:number [][]
 
-    constructor(Entrymap){
+    constructor(Entrymap:number [][]){
             this.map = Entrymap
     }
     getmap () :number [][]{

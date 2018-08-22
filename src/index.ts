@@ -1,10 +1,20 @@
-import {MapGame} from 'Map/MapGame'
+import {Game} from './Game/Game'
+import * as rl from 'readline-sync'
+
+function initgame() {
+    let flag:boolean = true
+    do{
+        //initial params
+        let input = rl.question('please introduce initial params width height width and number of bombs. Ej: 40 30 7  ')
+
+        //separate and verify params
+        let params:Array<string> = input.split(' ')
+        if(params.length < 3)
+
+    }while(flag)
+}
 
 
-
-let Entrymap:number [][] = [[2,3,4],[3, 5,4]]
-
-let gamemap: MapGame = new MapGame(Entrymap)
-
-    
-console.log(gamemap.getmap())
+//startin code
+console.clear()
+initgame()
