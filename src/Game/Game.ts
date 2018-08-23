@@ -32,7 +32,7 @@ export class Game {
         do{
             console.log(this.gameMap.toString())
             console.log(this.bombMap.toString())
-            input = rl.question('type your position (Ej. 30 40) and what dou you want to do (Ej. U uncover M mark )\n')
+            input = rl.question('type your position (i.e 30 40) and what dou you want to do (i.e U uncover M mark )\n')
             console.clear()
             params = input.split(' ')
 
@@ -98,7 +98,7 @@ export class Game {
         this.statusGame = true
         do{
             //initial params
-            let input = rl.question('please introduce initial params height, width and number of bombs. Ej: 40 30 7  \n')
+            let input = rl.question('please introduce initial params height, width and number of bombs. i.e: 40 30 7  \n')
 
 
             //separate params for initialize game
@@ -157,9 +157,27 @@ export class Game {
 
                 }
             } else {
-
+                if (this.gameMap.getposition(y-1,x-1) == '.')
+                this.gameMap.drawMap(y-1, x-1, 'P')
+            }
+            
+            //check for victory
+            if(this.statusGame && this.gameMap.findVictory(this.bombs)){
+                this.victory = true
+                this.statusGame = false
             }
         }
+    }
+
+    finish(){
+        console.clear()
+        
+        if (this.victory) {
+            console.log('VICTORY!! YOU ROCK')
+        } else {
+            console.log ('maybe next time :(')
+        }
+        
     }
 
 }

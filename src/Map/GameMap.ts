@@ -14,4 +14,21 @@ export class GameMap extends Map{
     getposition (y:number, x:number):string {
         return this.map[y][x]
     }
+    
+    findVictory (numbBombs:number):boolean {
+        let cont:number = 0
+
+        for (let i = 0; i < this.map.length; i++) {
+            for (let j = 0; j < this.map[0].length; j++) {
+                if (this.map[i][j] == '.'){
+                    return false
+                }else if(this.map[i][j] == 'P' ){
+                    cont++
+                }
+            }
+            
+        }
+
+        return (numbBombs - cont == 0) ? true : false
+    }
 }
