@@ -23,7 +23,7 @@ class Map {
         let array = '';
         this.map.forEach((row) => {
             row.forEach((element) => {
-                array += element;
+                array += element + ' ';
             });
             array += '\n';
         });

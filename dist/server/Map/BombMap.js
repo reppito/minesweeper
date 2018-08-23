@@ -11,7 +11,8 @@ class BombMap extends Map_1.Map {
         //cardinal coordinates
         let x;
         let y;
-        for (let i = 0; i < this.numBombs - 1;) {
+        //select in 'blank spaces' put bombs
+        for (let i = 0; i < this.numBombs;) {
             x = Math.floor(Math.random() * this.map[0].length);
             y = Math.floor(Math.random() * this.map.length);
             if (this.map[y][x] === '.') {

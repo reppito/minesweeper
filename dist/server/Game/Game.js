@@ -12,19 +12,41 @@ class Game {
         this.bombs = 0;
         this.gameMap = new GameMap_1.GameMap();
         this.bombMap = new BombMap_1.BombMap();
+        this.victory = false;
+        this.statusGame = true;
+    }
+    //InputUser
+    inputUser() {
+        let flag = false;
+        let input;
+        let params;
+        do {
+            console.log(this.gameMap.toString());
+            input = rl.question('type your position (Ej. 30 40) and what dou you want to do (Ej. U uncover M mark )\n');
+            console.clear();
+            params = input.split(' ');
+            if (params.length !== 3 || utils.verifyNaN(params.slice(0, 2)) === true || params[2].toLowerCase() !== 'm' && params[2].toLowerCase() !== 'u') {
+                flag = true;
+                console.log("you introduced an invalid format, please try again");
+            }
+            else {
+                return params;
+                flag = false;
+            }
+        } while (flag);
+        return params;
     }
     //intialize maps
     initMaps() {
         this.gameMap = new GameMap_1.GameMap(this.Height, this.Width);
         this.bombMap = new BombMap_1.BombMap(this.Height, this.Width, this.bombs);
-        console.log(this.bombMap.toString());
     }
     //intialize game
     initGame() {
         let flag = true;
         do {
             //initial params
-            let input = rl.question('please introduce initial params width height width and number of bombs. Ej: 40 30 7  ');
+            let input = rl.question('please introduce initial params height, width and number of bombs. Ej: 40 30 7  \n');
             //separate params for initialize game
             let params = input.split(' ');
             //verify params
@@ -35,8 +57,11 @@ class Game {
             else if (parseInt(params[0]) * parseInt(params[1]) < parseInt(params[2])) {
                 console.log('invalid numbers of bombs,please try again');
             }
-            else if (utils.MinimunSize(params.slice(1, 2), 3) || utils.MinimunSize(params.slice(3, 3), 1)) {
+            else if (utils.MinimunSize(params.slice(0, 2), 3) || utils.MinimunSize(params.slice(-1), 1)) {
                 console.log('minimun size required at least 3x3 and 1 bomb, please try again');
+            }
+            else if (utils.MaximunSize(params.slice(0, 2), 40)) {
+                console.log('you cant create a map maxium of 40 * 40 positions and height * width number of bombs, try again');
             }
             else {
                 this.Height = parseInt(params[0]);
@@ -46,6 +71,12 @@ class Game {
             }
         } while (flag);
         this.initMaps();
+    }
+    // gameplay
+    game() {
+        while (this.statusGame) {
+            this.inputUser();
+        }
     }
 }
 exports.Game = Game;

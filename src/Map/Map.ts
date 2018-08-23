@@ -31,7 +31,7 @@ export class Map{
 
         this.map.forEach( (row) => {
             row.forEach(  (element) => {
-                array += element 
+                array += element + ' '
             })
             array+='\n'
         })

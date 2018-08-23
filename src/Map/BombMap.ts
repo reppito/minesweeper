@@ -16,6 +16,7 @@ export class BombMap extends Map{
         let x:number 
         let y:number
 
+        //select in 'blank spaces' put bombs
         for (let i = 0; i < this.numBombs; ) {
             x = Math.floor(Math.random() * this.map[0].length)
             y = Math.floor(Math.random() * this.map.length)
