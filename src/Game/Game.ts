@@ -31,7 +31,6 @@ export class Game {
         let params:string []
         do{
             console.log(this.gameMap.toString())
-            console.log(this.bombMap.toString())
             input = rl.question('type your position (i.e 30 40) and what dou you want to do (i.e U uncover M mark )\n')
             console.clear()
             params = input.split(' ')
