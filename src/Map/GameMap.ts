@@ -6,4 +6,12 @@ export class GameMap extends Map{
         super(height,width)
     }
 
+    drawMap (y:number, x:number, input:string):void {
+        ``
+        this.map[y][x] = input
+    }
+    
+    getposition (y:number, x:number):string {
+        return this.map[y][x]
+    }
 }

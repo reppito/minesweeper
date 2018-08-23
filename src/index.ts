@@ -1,5 +1,5 @@
 import {Game} from './Game/Game'
-
+import * as rl from 'readline-sync'
 //creating game
 let game:Game = new Game()
 console.clear()
@@ -7,4 +7,5 @@ console.clear()
 while (true){
     game.initGame()
     game.game()
+    rl.question('perdiste')
 }

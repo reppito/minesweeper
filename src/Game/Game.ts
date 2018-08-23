@@ -31,6 +31,7 @@ export class Game {
         let params:string []
         do{
             console.log(this.gameMap.toString())
+            console.log(this.bombMap.toString())
             input = rl.question('type your position (Ej. 30 40) and what dou you want to do (Ej. U uncover M mark )\n')
             console.clear()
             params = input.split(' ')
@@ -60,9 +61,41 @@ export class Game {
         
     }
 
+    //since a position without adjacent bombs explode
+    explode (y:number, x:number){
+
+        //mark position as disable and visited
+        this.gameMap.drawMap(y,x, '-')
+
+        //looking for adjacent positions
+        for (let i = y-1; i <= y+1; i++) {
+            if(i>=0 && i <this.Height){
+                for (let j = x-1; j <= x+1; j++) {
+                    if(j>=0 && j <this.Width){
+
+                        if(this.gameMap.getposition(i, j)== '.' || this.gameMap.getposition(i, j)== 'P'){
+
+                            let adjacentBombs = this.bombMap.adjacentBombs(y,x)
+
+                            if (adjacentBombs == 0){
+                                this.explode (i,j)
+
+                            } else {
+                                this.gameMap.drawMap(y,x, adjacentBombs.toString())
+                            }
+                     
+                        }
+                    }
+                }
+            }
+
+        }
+    }
     //intialize game
     initGame() {
         let flag:boolean = true
+        this.victory = false
+        this.statusGame = true
         do{
             //initial params
             let input = rl.question('please introduce initial params height, width and number of bombs. Ej: 40 30 7  \n')
@@ -104,8 +137,28 @@ export class Game {
     game ():void{
         let input:string []
         while(this.statusGame){
+
             input = this.inputUser()
-            if (this.)
+            //cardinal coordinates
+            let y:number = parseInt(input[0])
+            let x:number = parseInt(input[1])
+            //cases`    
+            if (input[input.length-1].toLocaleLowerCase() == 'u' && this.bombMap.findBomb(y-1,x-1)){
+                this.statusGame = false
+                this.victory = false
+            } else if (input[input.length-1].toLocaleLowerCase() == 'u'){
+
+                let adjacentBombs = this.bombMap.adjacentBombs(y-1, x-1)
+
+                if(adjacentBombs != 0){
+                    this.gameMap.drawMap(y-1, x-1, adjacentBombs.toString())
+                } else {
+                    this.explode(y-1,x-1)
+
+                }
+            } else {
+
+            }
         }
     }
 

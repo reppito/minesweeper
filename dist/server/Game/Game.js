@@ -22,12 +22,17 @@ class Game {
         let params;
         do {
             console.log(this.gameMap.toString());
+            console.log(this.bombMap.toString());
             input = rl.question('type your position (Ej. 30 40) and what dou you want to do (Ej. U uncover M mark )\n');
             console.clear();
             params = input.split(' ');
             if (params.length !== 3 || utils.verifyNaN(params.slice(0, 2)) === true || params[2].toLowerCase() !== 'm' && params[2].toLowerCase() !== 'u') {
                 flag = true;
                 console.log("you introduced an invalid format, please try again");
+            }
+            else if (parseInt(params[0]) <= 0 || parseInt(params[0]) > this.Height || parseInt(params[1]) <= 0 || parseInt(params[1]) > this.Width) {
+                flag = true;
+                console.log('invalid coordinate, please try again');
             }
             else {
                 return params;
@@ -41,9 +46,34 @@ class Game {
         this.gameMap = new GameMap_1.GameMap(this.Height, this.Width);
         this.bombMap = new BombMap_1.BombMap(this.Height, this.Width, this.bombs);
     }
+    //since a position without adjacent bombs explode
+    explode(y, x) {
+        //mark position as disable and visited
+        this.gameMap.drawMap(y, x, '-');
+        //looking for adjacent positions
+        for (let i = y - 1; i <= y + 1; i++) {
+            if (i >= 0 && i < this.Height) {
+                for (let j = x - 1; j <= x + 1; j++) {
+                    if (j >= 0 && j < this.Width) {
+                        if (this.gameMap.getposition(i, j) == '.' || this.gameMap.getposition(i, j) == 'P') {
+                            let adjacentBombs = this.bombMap.adjacentBombs(y, x);
+                            if (adjacentBombs == 0) {
+                                this.explode(i, j);
+                            }
+                            else {
+                                this.gameMap.drawMap(y, x, adjacentBombs.toString());
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
     //intialize game
     initGame() {
         let flag = true;
+        this.victory = false;
+        this.statusGame = true;
         do {
             //initial params
             let input = rl.question('please introduce initial params height, width and number of bombs. Ej: 40 30 7  \n');
@@ -74,8 +104,28 @@ class Game {
     }
     // gameplay
     game() {
+        let input;
         while (this.statusGame) {
-            this.inputUser();
+            input = this.inputUser();
+            //cardinal coordinates
+            let y = parseInt(input[0]);
+            let x = parseInt(input[1]);
+            //cases`    
+            if (input[input.length - 1].toLocaleLowerCase() == 'u' && this.bombMap.findBomb(y - 1, x - 1)) {
+                this.statusGame = false;
+                this.victory = false;
+            }
+            else if (input[input.length - 1].toLocaleLowerCase() == 'u') {
+                let adjacentBombs = this.bombMap.adjacentBombs(y - 1, x - 1);
+                if (adjacentBombs != 0) {
+                    this.gameMap.drawMap(y - 1, x - 1, adjacentBombs.toString());
+                }
+                else {
+                    this.explode(y - 1, x - 1);
+                }
+            }
+            else {
+            }
         }
     }
 }

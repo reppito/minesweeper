@@ -16,16 +16,31 @@ class BombMap extends Map_1.Map {
             x = Math.floor(Math.random() * this.map[0].length);
             y = Math.floor(Math.random() * this.map.length);
             if (this.map[y][x] === '.') {
-                this.map[y][x] = 'bomb';
+                this.map[y][x] = '*';
                 i++;
             }
         }
     }
-    findBomb(x, y) {
+    findBomb(y, x) {
         if (this.map[y][x] !== '.') {
             return true;
         }
         return false;
+    }
+    adjacentBombs(y, x) {
+        let cont = 0;
+        for (let i = y - 1; i <= y + 1; i++) {
+            if (i >= 0 && i < this.map.length) {
+                for (let j = x - 1; j <= x + 1; j++) {
+                    if (j >= 0 && j < this.map[i].length) {
+                        if (this.map[i][j] === '*') {
+                            cont++;
+                        }
+                    }
+                }
+            }
+        }
+        return cont;
     }
 }
 exports.BombMap = BombMap;
