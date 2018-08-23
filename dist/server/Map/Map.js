@@ -18,6 +18,7 @@ class Map {
             }
         }
     }
+    //show string map
     toString() {
         let array = '';
         this.map.forEach((row) => {
